@@ -38,8 +38,20 @@ def create_store():
 
 @app.route("/stores/")
 def index_stores():
-   store_list = Store.select()
+   store_list = Store.select().order_by(Store.id.asc())
    return render_template('stores.html', store_list=store_list)
+
+@app.route("/stores/<store_id>/destroy", methods=['POST'])
+def destroy_store(store_id):
+   store_list = Store.select()
+
+   if request.method == "POST":
+      store = Store.get_by_id(store_id)
+      flash(f"Closed {store.name}.")
+      store.delete_instance()
+      return redirect(url_for('index_stores'))
+   else:
+      return render_template('stores.html', store_list=store_list)
 
 @app.route("/store/<store_id>", methods=['GET'])
 def edit_store(store_id):
@@ -57,7 +69,6 @@ def update_store(store_id):
          return redirect(url_for('edit_store', store_id=store.id))
    else:
       return render_template('store.html', store=store)
-
 
 @app.route("/warehouse/new")
 def new_warehouse():
