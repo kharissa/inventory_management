@@ -1,0 +1,26 @@
+{% extends "_layout.html" %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-primary" role="alert">
+      <ul class="flashes text-center mb-0">
+        {% for message in messages %}
+        <li class="list-unstyled">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endwith %}
+<h1 class="mb-4">Create Store</h1>
+<form action="{{ url_for('create_store') }}" method="POST">
+  <div class="form-row align-items-center">
+    <div class="form-group col">
+      <label for="store_name">Store Name</label>
+      <input type='text' name='store_name' class="form-control" / >
+    </div>
+    <div class="col-md-2 mt-3">
+      <button type="submit" class="btn btn-primary">Add Store</button>
+    </div>
+  </div>
+</form>
+{% endblock %}
