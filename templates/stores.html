@@ -1,5 +1,16 @@
 {% extends "_layout.html" %}
 {% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-primary" role="alert">
+    <ul class="flashes text-center mb-0">
+        {% for message in messages %}
+        <li class="list-unstyled">{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endwith %}
 <h1 class="mb-4">Stores</h1>
 <table class="table table-hover">
     <thead class="thead-dark">
@@ -17,8 +28,9 @@
             <td>{{store.name}}</td>
             <td>{{ store.warehouses.count() }}</td>
             <td>
+                <a href="/store/{{store.id}}"><button type="submit" class="btn btn-info btn-block my-1">Edit Store</button></a>
                 <form action="{{ url_for('destroy_store', store_id=store.id) }}" method="POST">
-                    <button type="submit" class="btn btn-danger">Close Store</button>
+                    <button type="submit" class="btn btn-danger btn-block my-1">Close Store</button>
                 </form>
             </td>
         </tr>

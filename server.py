@@ -33,8 +33,8 @@ def create_store():
       if s.save():
          flash(f"Store name {request.form['store_name']} successfully saved.")
          return redirect(url_for('new_store'))
-   else:
-      return render_template('add-store.html', name=request.form['store_name'])
+      else:
+         return render_template('add-store.html', name=request.form['store_name'], errors=s.errors)
 
 @app.route("/stores/")
 def index_stores():
@@ -67,8 +67,8 @@ def update_store(store_id):
       if store.save():
          flash(f"Updated store name to {store.name}.")
          return redirect(url_for('edit_store', store_id=store.id))
-   else:
-      return render_template('store.html', store=store)
+      else:
+         return render_template('store.html', store=store, errors=store.errors)
 
 @app.route("/warehouse/new")
 def new_warehouse():
